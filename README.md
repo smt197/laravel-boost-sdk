@@ -4,7 +4,7 @@ Le **Laravel Boost SDK** est un lanceur standalone pour le serveur MCP [Laravel 
 
 ## Fonctionnement (Bootstrap Hybride)
 
-Le SDK utilise un mécanisme de "Bootstrap Hybride" : il embarque lui-même le moteur Boost et "s'attache" dynamiquement au projet Laravel cible en chargeant son environnement, son autoloader et son instance d'application.
+Le SDK utilise un mécanisme de "Bootstrap Hybride" : il embarque lui-même le moteur Boost et "s'attache" dynamiquement au projet Laravel cible en chargeant son environnement, son autoloader et son instance d'application..
 
 ## Prérequis
 
