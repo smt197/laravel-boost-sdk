@@ -1,0 +1,65 @@
+#!/usr/bin/env php
+<?php
+
+// 1. Charge l'autoloader du SDK (contient Laravel Boost et ses dépendances)
+$sdkAutoload = __DIR__.'/../vendor/autoload.php';
+if (!file_exists($sdkAutoload)) {
+    fwrite(STDERR, "Erreur: Autoloader du SDK non trouvé. Exécutez 'composer install'.\n");
+    exit(1);
+}
+require $sdkAutoload;
+
+use Laravel\Boost\Mcp\Boost;
+use Illuminate\Contracts\Console\Kernel;
+
+/**
+ * Trouve la racine d'un projet Laravel en cherchant le fichier 'artisan'
+ */
+function findProjectRoot(string $currentDir): ?string
+{
+    do {
+        if (file_exists($currentDir.'/artisan')) {
+            return $currentDir;
+        }
+        $currentDir = dirname($currentDir);
+    } while (dirname($currentDir) !== $currentDir);
+
+    return null;
+}
+
+// 2. Détection du projet cible
+$workingDirectory = getcwd();
+$projectRoot = findProjectRoot($workingDirectory);
+
+if ($projectRoot === null) {
+    fwrite(STDERR, "Erreur: Aucun projet Laravel détecté dans {$workingDirectory}.\n");
+    exit(1);
+}
+
+// 3. Bootstrap de l'application cible
+// On a besoin de charger l'autoloader du PROJET CIBLE pour que Boost puisse voir les modèles/classes du projet.
+$targetAutoload = $projectRoot . '/vendor/autoload.php';
+if (file_exists($targetAutoload)) {
+    require_once $targetAutoload;
+}
+
+// Lancement d'une instance minimale de Laravel à partir du projet cible
+$appFile = $projectRoot . '/bootstrap/app.php';
+if (!file_exists($appFile)) {
+    fwrite(STDERR, "Erreur: Fichier bootstrap/app.php non trouvé dans le projet cible.\n");
+    exit(1);
+}
+
+/** @var \Illuminate\Foundation\Application $app */
+$app = require_once $appFile;
+
+// On s'assure que l'application est bien initialisée en mode console
+$consoleKernel = $app->make(Kernel::class);
+$consoleKernel->bootstrap();
+
+// 4. Lancement du serveur MCP Boost
+// On passe l'instance de l'application cible à Boost pour qu'il travaille dans ce contexte
+$server = new Boost();
+
+// Utilisation du transport standard (stdio) pour le MCP
+$server->start();

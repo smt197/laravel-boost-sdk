@@ -1,0 +1,27 @@
+{
+    "name": "thumanics/laravel-boost-sdk",
+    "description": "Global SDK to launch the Laravel Boost MCP server from any project.",
+    "type": "library",
+    "license": "MIT",
+    "require": {
+        "php": "^8.2",
+        "symfony/process": "^6.0 || ^7.0",
+        "thumanics/laravel-boost": "dev-main"
+    },
+    "autoload": {
+        "psr-4": {
+            "YourVendor\\LaravelBoostSDK\\": "src/"
+        }
+    },
+    "bin": [
+        "bin/laravel-boost-mcp"
+    ],
+    "repositories": [
+        {
+            "type": "path",
+            "url": "../laravel-boost"
+        }
+    ],
+    "minimum-stability": "dev",
+    "prefer-stable": true
+}
