@@ -11,6 +11,7 @@ Le SDK utilise un mécanisme de "Bootstrap Hybride" : il embarque lui-même le m
 - PHP 8.2 ou supérieur
 - Un projet Laravel (v10, v11 ou v12)
 
+
 ## Installation
 
 ### Installation Globale (Recommandé)
