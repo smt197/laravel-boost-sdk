@@ -1,5 +1,5 @@
 {
-    "name": "thumanics/laravel-boost-sdk",
+    "name": "smt197/laravel-boost-sdk",
     "description": "Global SDK to launch the Laravel Boost MCP server from any project.",
     "type": "library",
     "license": "MIT",
