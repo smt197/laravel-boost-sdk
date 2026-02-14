@@ -11,6 +11,8 @@ require $sdkAutoload;
 
 use Laravel\Boost\Mcp\Boost;
 use Illuminate\Contracts\Console\Kernel;
+use Laravel\Mcp\Server\Transport\StdioTransport;
+use Illuminate\Support\Str;
 
 /**
  * Trouve la racine d'un projet Laravel en cherchant le fichier 'artisan'
@@ -59,7 +61,8 @@ $consoleKernel->bootstrap();
 
 // 4. Lancement du serveur MCP Boost
 // On passe l'instance de l'application cible à Boost pour qu'il travaille dans ce contexte
-$server = new Boost();
+$transport = new StdioTransport(Str::uuid()->toString());
+$server = new Boost($transport);
 
 // Utilisation du transport standard (stdio) pour le MCP
 $server->start();
