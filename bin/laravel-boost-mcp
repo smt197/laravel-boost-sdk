@@ -66,3 +66,4 @@ $server = new Boost($transport);
 
 // Utilisation du transport standard (stdio) pour le MCP
 $server->start();
+
